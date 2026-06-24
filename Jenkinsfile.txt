@@ -1,7 +1,7 @@
 pipeline {
     agent {
         label {
-            label 'built-in'
+            label 'slave-1'
             customWorkspace '/mnt/war'
         }
     }
@@ -30,7 +30,7 @@ pipeline {
         stage ('DEPLOY-ON-SLAVE') {
             agent {
                 label {
-                    label 'slave-1'
+                    label 'slave-2'
                 }
             }
             steps {
