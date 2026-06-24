@@ -1,7 +1,7 @@
 pipeline {
     agent {
         label {
-            label 'built-in'
+            label 'slave-1'
             customWorkspace '/mnt/war'
         }
     }
@@ -9,7 +9,7 @@ pipeline {
         stage ('SCM') {
             steps {
                 sh 'rm -rf *'
-                sh 'git clone https://github.com/Sudhir-lab-dev/new-project.git'
+                sh 'git clone https://github.com/SShifa/vel-app.git'
             }
         }
         stage ('BUILD') {
@@ -23,19 +23,19 @@ pipeline {
         stage ('UPLOAD-WAR-TO-S3') {
             steps {
                  sh '''
-                aws s3 cp /mnt/war/new-project/gameoflife-java21/target/gameoflife-java21-0.0.1-SNAPSHOT.war s3://war-gameoflife-shifa/
+                aws s3 cp /mnt/war/new-project/vel-app/java21/target/vel-app.war s3://war-gameoflife-shifa/
                 '''
             }
         }
         stage ('DEPLOY-ON-SLAVE') {
             agent {
                 label {
-                    label 'slave-1'
+                    label 'slave-2'
                 }
             }
             steps {
                  sh '''
-                aws s3 cp s3://war-gameoflife-shifa/gameoflife-java21-0.0.1-SNAPSHOT.war /mnt/apache-tomcat-10.1.55/webapps/
+                aws s3 cp s3://war-gameoflife-shifa/vel-app.war /mnt/apache-tomcat-10.1.55/webapps/
                 '''
             }
         }
