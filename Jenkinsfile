@@ -15,7 +15,7 @@ pipeline {
         stage ('BUILD') {
             steps {
                  sh '''
-                cd /mnt/war/new-project/gameoflife-java21
+                cd /mnt/war/vel-app
                 /mnt/build-tool/apache-maven-3.9.16/bin/mvn clean install
                 '''
             }
@@ -23,7 +23,7 @@ pipeline {
         stage ('UPLOAD-WAR-TO-S3') {
             steps {
                  sh '''
-                aws s3 cp /mnt/war/new-project/vel-app/java21/target/vel-app.war s3://war-gameoflife-shifa/
+                aws s3 cp /mnt/war/vel-app/java21/target/vel-app.war s3://war-gameoflife-shifa/
                 '''
             }
         }
